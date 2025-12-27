@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Futebol Virtual - Análise</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>📊 Análise Futebol Virtual</h1>
+
+<div class="filtros">
+  <button onclick="setFiltro(12)">12 Horas</button>
+  <button onclick="setFiltro(24)">24 Horas</button>
+  <button onclick="setFiltro(72)">72 Horas</button>
+</div>
+
+<div class="entrada">
+  <input type="text" id="liga" placeholder="Liga (Ex: Inglesa)">
+  <input type="text" id="placar" placeholder="Placar (Ex: 2x1)">
+  <button onclick="salvarJogo()">Salvar Jogo</button>
+</div>
+
+<div class="painel">
+  <p id="totalJogos"></p>
+  <p id="mediaGols"></p>
+  <p id="over25"></p>
+  <p id="btts"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.filtros button,
+.entrada button {
+  margin: 5px;
+  padding: 10px;
+  background: #00c853;
+  border: none;
+  cursor: pointer;
+  color: #000;
+  font-weight: bold;
+}
+
+.entrada input {
+  padding: 10px;
+  margin: 5px;
+  width: 45%;
+}
+
+.painel {
+  margin-top: 20px;
+  background: #1e1e1e;
+  padding: 15px;
+  border-radius: 
+
