@@ -1,4 +1,116 @@
 https://github.com/Guilhermeluiz883/futebol-virtual-analise
+index.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Futebol Virtual - Análise</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#111;
+  color:#fff;
+  padding:15px;
+}
+h1{text-align:center}
+button{
+  padding:10px;
+  margin:5px;
+  background:#00c853;
+  border:none;
+  font-weight:bold;
+}
+input{
+  padding:10px;
+  margin:5px;
+  width:45%;
+}
+.painel{
+  background:#1e1e1e;
+  padding:15px;
+  margin-top:15px;
+  border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📊 Futebol Virtual</h1>
+
+<div>
+  <button onclick="setFiltro(12)">12h</button>
+  <button onclick="setFiltro(24)">24h</button>
+  <button onclick="setFiltro(72)">72h</button>
+</div>
+
+<div>
+  <input id="liga" placeholder="Liga (Ex: Inglesa)">
+  <input id="placar" placeholder="Placar (Ex: 2x1)">
+  <button onclick="salvar()">Salvar</button>
+</div>
+
+<div class="painel" id="painel"></div>
+
+<script>
+let jogos = JSON.parse(localStorage.getItem("jogos")) || [];
+let horas = 24;
+
+function setFiltro(h){
+  horas = h;
+  atualizar();
+}
+
+function salvar(){
+  let liga = document.getElementById("liga").value;
+  let placar = document.getElementById("placar").value;
+
+  if(!placar.includes("x")){
+    alert("Use o formato 2x1");
+    return;
+  }
+
+  let g = placar.split("x").map(Number);
+
+  jogos.push({
+    liga: liga,
+    g1: g[0],
+    g2: g[1],
+    t: Date.now()
+  });
+
+  localStorage.setItem("jogos", JSON.stringify(jogos));
+  atualizar();
+}
+
+function atualizar(){
+  let limite = Date.now() - horas * 3600000;
+  let f = jogos.filter(j => j.t >= limite);
+
+  let gols = 0, over = 0, btts = 0;
+
+  f.forEach(j => {
+    let s = j.g1 + j.g2;
+    gols += s;
+    if(s >= 3) over++;
+    if(j.g1 > 0 && j.g2 > 0) btts++;
+  });
+
+  document.getElementById("painel").innerHTML =
+    "Jogos analisados: " + f.length + "<br>" +
+    "Média de gols: " + (gols / f.length || 0).toFixed(2) + "<br>" +
+    "Over 2.5: " + ((over / f.length) * 100 || 0).toFixed(1) + "%<br>" +
+    "BTTS: " + ((btts / f.length) * 100 || 0).toFixed(1) + "%";
+}
+
+atualizar();
+</script>
+
+</body>
+</html>
+https://guilhermeluiz883.github.io/futebol-virtual-analise/
 
 <!DOCTYPE html>
 <html lang="pt-BR">
